@@ -91,3 +91,66 @@ document.querySelectorAll('.dock-item').forEach((item, index) => {
     });
 });
 
+const audio = document.getElementById('audio-player');
+const playBtn = document.querySelector('.play-btn');
+const progressFill = document.querySelector('.progress-fill');
+const currentTimeEl = document.querySelector('.current-time');
+const totalTimeEl = document.querySelector('.total-time');
+const volumeFill = document.querySelector('.volume-fill');
+const volumeBar = document.querySelector('.volume-bar');
+const progressBar = document.querySelector('.progress-bar');
+
+
+playBtn.addEventListener('click', () => {
+    if (audio.paused) {
+        audio.play().catch(err => console.log("Кликни по странице, чтобы браузер разрешил звук"));
+        playBtn.textContent = '⏸️';
+        playBtn.style.animation = 'pulse 1s ease-in-out infinite';
+    } else {
+        audio.pause();
+        playBtn.textContent = '▶️';
+        playBtn.style.animation = 'none';
+    }
+});
+
+audio.addEventListener('timeupdate', () => {
+    if (!isNaN(audio.duration) && isFinite(audio.duration)) {
+        const percent = (audio.currentTime / audio.duration) * 100;
+        progressFill.style.width = percent + '%';
+        
+       
+        currentTimeEl.textContent = formatTime(audio.currentTime);
+        totalTimeEl.textContent = formatTime(audio.duration);
+    } else {
+       
+        currentTimeEl.textContent = formatTime(audio.currentTime);
+        totalTimeEl.textContent = "Live";
+    }
+});
+
+
+progressBar.addEventListener('click', (e) => {
+    if (!isNaN(audio.duration) && isFinite(audio.duration)) {
+        const rect = progressBar.getBoundingClientRect();
+        const percent = (e.clientX - rect.left) / rect.width;
+        audio.currentTime = percent * audio.duration;
+    }
+});
+
+
+volumeBar.addEventListener('click', (e) => {
+    const rect = volumeBar.getBoundingClientRect();
+    let percent = (e.clientX - rect.left) / rect.width;
+    if (percent < 0) percent = 0;
+    if (percent > 1) percent = 1;
+    
+    audio.volume = percent;
+    volumeFill.style.width = (percent * 100) + '%';
+});
+
+
+function formatTime(seconds) {
+    const min = Math.floor(seconds / 60);
+    const sec = Math.floor(seconds % 60);
+    return `${min}:${sec.toString().padStart(2, '0')}`;
+}
