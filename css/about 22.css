@@ -1,0 +1,761 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Ubuntu', 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, rgba(255, 154, 158, 0.7) 0%, rgba(254, 207, 239, 0.7) 50%, rgba(251, 194, 235, 0.7) 100%),
+                url('https://i.pinimg.com/736x/53/80/1b/53801b8375e6c11e322f91398dd6d571.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    height: 100vh;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.desktop {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    padding-top: 32px;
+    padding-bottom: 80px;
+}
+
+/* Top Bar */
+.top-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 32px;
+    background: rgba(255, 182, 193, 0.3);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 12px;
+    box-shadow: 0 2px 8px rgba(255, 105, 180, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.5);
+    z-index: 1000;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.top-bar-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.top-bar-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.menu-item {
+    font-size: 13px;
+    color: #fff;
+    font-weight: 500;
+    padding: 4px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.menu-item:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.05);
+}
+
+.clock {
+    font-size: 13px;
+    color: #fff;
+    font-weight: 600;
+    margin-left: 8px;
+}
+
+.top-bar .icon {
+    font-size: 16px;
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+.top-bar .icon:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.1);
+}
+
+/* Windows */
+.window {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(30px) saturate(180%);
+    -webkit-backdrop-filter: blur(30px) saturate(180%);
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(255, 105, 180, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.5),
+                inset 0 -1px 0 rgba(255, 255, 255, 0.2);
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.window::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 50%;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.3) 0%, transparent 100%);
+    pointer-events: none;
+}
+
+.window:hover {
+    box-shadow: 0 12px 40px rgba(255, 105, 180, 0.6),
+                inset 0 1px 0 rgba(255, 255, 255, 0.6),
+                inset 0 -1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.terminal {
+    width: 600px;
+    height: 400px;
+    top: 60px;
+    left: 50px;
+}
+
+.files {
+    width: 700px;
+    height: 500px;
+    top: 100px;
+    left: 400px;
+}
+
+.browser {
+    width: 900px;
+    height: 600px;
+    top: 80px;
+    left: 680px;
+}
+
+.player {
+    width: 400px;
+    height: 500px;
+    top: 120px;
+    left: 100px;
+}
+
+.window-header {
+    height: 40px;
+    background: rgba(255, 182, 193, 0.4);
+    backdrop-filter: blur(15px) saturate(180%);
+    -webkit-backdrop-filter: blur(15px) saturate(180%);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 16px;
+    cursor: move;
+    user-select: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+.window-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #fff;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.window-controls {
+    display: flex;
+    gap: 8px;
+}
+
+.control {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 14px;
+    color: #fff;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.control:hover {
+    background: rgba(255, 255, 255, 0.25);
+    transform: scale(1.2) rotate(5deg);
+    box-shadow: 0 2px 8px rgba(255, 105, 180, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+.control.close:hover {
+    background: rgba(255, 105, 180, 0.8);
+    transform: scale(1.2) rotate(90deg);
+    box-shadow: 0 2px 12px rgba(255, 105, 180, 0.6);
+}
+
+.window-content {
+    padding: 20px;
+    color: #333;
+    height: calc(100% - 40px);
+    overflow: auto;
+}
+
+/* Terminal */
+.terminal-content {
+    background: linear-gradient(135deg, #2d1b2e 0%, #3d2b3e 100%);
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
+    color: #ffb6c1;
+    padding: 16px;
+}
+
+.terminal-line {
+    margin-bottom: 8px;
+    line-height: 1.6;
+}
+
+.prompt {
+    color: #ff69b4;
+    font-weight: bold;
+}
+
+.cursor {
+    animation: blink 1s infinite;
+    color: #ffb6c1;
+}
+
+@keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
+}
+
+/* File Manager */
+.window-content {
+    display: flex;
+    padding: 0;
+}
+
+.file-sidebar {
+    width: 180px;
+    background: linear-gradient(180deg, rgba(255, 182, 193, 0.2) 0%, rgba(255, 192, 203, 0.1) 100%);
+    padding: 12px;
+    border-right: 1px solid rgba(255, 182, 193, 0.3);
+}
+
+.sidebar-item {
+    padding: 10px 12px;
+    margin-bottom: 4px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 13px;
+    color: #666;
+}
+
+.sidebar-item:hover {
+    background: rgba(255, 182, 193, 0.3);
+    color: #ff69b4;
+    transform: translateX(5px);
+    padding-left: 16px;
+}
+
+.file-grid {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 16px;
+    padding: 20px;
+    align-content: start;
+}
+
+.file-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.4s ease;
+}
+
+.file-item:hover {
+    background: rgba(255, 182, 193, 0.2);
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0 4px 12px rgba(255, 105, 180, 0.3);
+}
+
+.file-icon {
+    font-size: 48px;
+    margin-bottom: 8px;
+}
+
+.file-name {
+    font-size: 12px;
+    text-align: center;
+    color: #666;
+    word-wrap: break-word;
+}
+
+/* Dock */
+.dock {
+    position: fixed;
+    bottom: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
+    padding: 12px 16px;
+    background: rgba(255, 182, 193, 0.3);
+    backdrop-filter: blur(30px) saturate(180%);
+    -webkit-backdrop-filter: blur(30px) saturate(180%);
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(255, 105, 180, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.5),
+                inset 0 -1px 0 rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    z-index: 999;
+}
+
+.dock::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 50%;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.2) 0%, transparent 100%);
+    border-radius: 16px 16px 0 0;
+    pointer-events: none;
+}
+
+.dock-item {
+    width: 56px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    position: relative;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+.dock-item:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: translateY(-8px) scale(1.1);
+    box-shadow: 0 4px 16px rgba(255, 105, 180, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+.dock-item:nth-child(1) {
+    transition-delay: 0s;
+}
+
+.dock-item:nth-child(2) {
+    transition-delay: 0.05s;
+}
+
+.dock-item:nth-child(3) {
+    transition-delay: 0.1s;
+}
+
+.dock-item:nth-child(4) {
+    transition-delay: 0.15s;
+}
+
+.dock-item:nth-child(5) {
+    transition-delay: 0.2s;
+}
+
+.dock-item:hover {
+    transform: translateY(-8px) scale(1.1);
+    background: rgba(255, 255, 255, 0.5);
+}
+
+.dock-item.active::before {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    width: 6px;
+    height: 6px;
+    background: #ff69b4;
+    border-radius: 50%;
+    box-shadow: 0 0 8px #ff69b4;
+}
+
+.dock-icon {
+    font-size: 28px;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(255, 182, 193, 0.1);
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(255, 182, 193, 0.5);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 105, 180, 0.7);
+}
+
+/* Music Player */
+.player-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding: 30px 20px;
+}
+
+.album-art {
+    width: 200px;
+    height: 200px;
+    background: linear-gradient(135deg, #ff69b4 0%, #ffb6c1 100%);
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 80px;
+    box-shadow: 0 8px 24px rgba(255, 105, 180, 0.4);
+    animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+.song-info {
+    text-align: center;
+}
+
+.song-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 8px;
+}
+
+.song-artist {
+    font-size: 14px;
+    color: #666;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 6px;
+    background: rgba(255, 182, 193, 0.3);
+    border-radius: 3px;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.progress-fill {
+    width: 30%;
+    height: 100%;
+    background: linear-gradient(90deg, #ff69b4 0%, #ffb6c1 100%);
+    border-radius: 3px;
+    transition: width 0.3s ease;
+}
+
+.time-info {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: #666;
+}
+
+.player-controls {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+}
+
+.player-btn {
+    width: 48px;
+    height: 48px;
+    border: none;
+    background: rgba(255, 182, 193, 0.3);
+    backdrop-filter: blur(10px) saturate(180%);
+    -webkit-backdrop-filter: blur(10px) saturate(180%);
+    border-radius: 50%;
+    font-size: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+.player-btn:hover {
+    background: rgba(255, 182, 193, 0.5);
+    transform: scale(1.1);
+    box-shadow: 0 4px 12px rgba(255, 105, 180, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+.play-btn {
+    width: 64px;
+    height: 64px;
+    background: rgba(255, 105, 180, 0.4);
+    backdrop-filter: blur(15px) saturate(200%);
+    -webkit-backdrop-filter: blur(15px) saturate(200%);
+    font-size: 24px;
+    box-shadow: 0 4px 16px rgba(255, 105, 180, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+.play-btn:hover {
+    transform: scale(1.15);
+    box-shadow: 0 6px 20px rgba(255, 105, 180, 0.6),
+                inset 0 1px 0 rgba(255, 255, 255, 0.6);
+}
+
+.volume-control {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.volume-control span {
+    font-size: 20px;
+}
+
+.volume-bar {
+    flex: 1;
+    height: 6px;
+    background: rgba(255, 182, 193, 0.3);
+    border-radius: 3px;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.volume-fill {
+    width: 70%;
+    height: 100%;
+    background: linear-gradient(90deg, #ff69b4 0%, #ffb6c1 100%);
+    border-radius: 3px;
+    transition: width 0.3s ease;
+}
+
+/* Gmail Browser */
+.browser-content {
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.gmail-header {
+    height: 64px;
+    background: #fff;
+    border-bottom: 1px solid #e0e0e0;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    gap: 20px;
+}
+
+.gmail-logo {
+    font-size: 22px;
+    font-weight: 500;
+    color: #ff69b4;
+}
+
+.gmail-search {
+    flex: 1;
+    max-width: 600px;
+    display: flex;
+    align-items: center;
+    background: rgba(255, 182, 193, 0.1);
+    border-radius: 8px;
+    padding: 8px 16px;
+    gap: 12px;
+}
+
+.gmail-search input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    outline: none;
+    font-size: 14px;
+    color: #666;
+}
+
+.gmail-profile {
+    width: 40px;
+    height: 40px;
+}
+
+.profile-pic {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #ffb6c1;
+}
+
+.gmail-body {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+}
+
+.gmail-sidebar {
+    width: 200px;
+    background: #fff;
+    padding: 16px 8px;
+    border-right: 1px solid #e0e0e0;
+}
+
+.compose-btn {
+    background: linear-gradient(135deg, #ff69b4 0%, #ffb6c1 100%);
+    color: #fff;
+    padding: 12px 20px;
+    border-radius: 24px;
+    text-align: center;
+    cursor: pointer;
+    margin-bottom: 16px;
+    font-weight: 500;
+    box-shadow: 0 2px 8px rgba(255, 105, 180, 0.3);
+    transition: all 0.4s ease;
+}
+
+.compose-btn:hover {
+    transform: translateY(-4px) scale(1.05);
+    box-shadow: 0 6px 16px rgba(255, 105, 180, 0.5);
+}
+
+.gmail-menu-item {
+    padding: 10px 16px;
+    margin-bottom: 4px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    color: #666;
+    transition: all 0.3s ease;
+}
+
+.gmail-menu-item:hover {
+    background: rgba(255, 182, 193, 0.2);
+    transform: translateX(5px);
+}
+
+.gmail-menu-item.active {
+    background: rgba(255, 182, 193, 0.3);
+    color: #ff69b4;
+    font-weight: 500;
+    transform: translateX(8px);
+}
+
+.gmail-inbox {
+    flex: 1;
+    background: #fff;
+    overflow-y: auto;
+}
+
+.email-item {
+    display: flex;
+    padding: 16px 20px;
+    border-bottom: 1px solid #f0f0f0;
+    cursor: pointer;
+    transition: all 0.4s ease;
+    gap: 16px;
+}
+
+.email-item:hover {
+    background: rgba(255, 182, 193, 0.1);
+    box-shadow: inset 4px 0 0 #ff69b4;
+    transform: translateX(8px);
+    padding-left: 28px;
+}
+
+.email-item.unread {
+    background: rgba(255, 182, 193, 0.05);
+}
+
+.email-avatar {
+    width: 48px;
+    height: 48px;
+    flex-shrink: 0;
+}
+
+.email-avatar img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #ffb6c1;
+}
+
+.email-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.email-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 4px;
+}
+
+.email-sender {
+    font-weight: 600;
+    color: #333;
+    font-size: 14px;
+}
+
+.email-time {
+    font-size: 12px;
+    color: #999;
+}
+
+.email-subject {
+    font-weight: 500;
+    color: #333;
+    font-size: 14px;
+    margin-bottom: 4px;
+}
+
+.email-preview {
+    font-size: 13px;
+    color: #666;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
