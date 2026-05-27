@@ -10,8 +10,8 @@ html {
 
 body {
     font-family: 'Ubuntu', 'Segoe UI', sans-serif;
-    background: linear-gradient(135deg, rgba(255, 154, 158, 0.7) 0%, rgba(254, 207, 239, 0.7) 50%, rgba(251, 194, 235, 0.7) 100%),
-                url('https://i.pinimg.com/736x/53/80/1b/53801b8375e6c11e322f91398dd6d571.jpg');
+    background: linear-gradient(135deg, #ffffff0a 0%, hwb(0 100% 0% / 0.062) 0%, hwb(0 100% 0% / 0.096) 0%),
+                url('https://4kwallpapers.com/images/walls/thumbs_3t/26436.jpg');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
