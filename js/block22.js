@@ -280,7 +280,7 @@ let activeBrowserTab = 0;
 function initBrowserTabs() {
     browserTabs = [
         { title: 'Главная', icon: 'home', url: 'about:home' },
-        { title: 'GitHub', icon: 'github', url: 'https://github.com' }
+        { title: 'GitHub', icon: 'code', url: 'https://github.com' }
     ];
     renderBrowserTabs();
 }
@@ -368,15 +368,15 @@ function loadBrowserPage(url) {
                         <span>Example.com</span>
                     </a>
                     <a href="#" class="quick-link" data-url="https://github.com" data-external="true">
-                        <i data-lucide="github"></i>
+                        <i data-lucide="code"></i>
                         <span>GitHub</span>
                     </a>
                     <a href="#" class="quick-link" data-url="https://youtube.com" data-external="true">
-                        <i data-lucide="youtube"></i>
+                        <i data-lucide="video"></i>
                         <span>YouTube</span>
                     </a>
                     <a href="#" class="quick-link" data-url="https://twitter.com" data-external="true">
-                        <i data-lucide="twitter"></i>
+                        <i data-lucide="bird"></i>
                         <span>Twitter</span>
                     </a>
                 </div>
