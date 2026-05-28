@@ -123,7 +123,7 @@
                     <div class="sidebar-item"><i data-lucide="music-4"></i> Музыка</div>
                     <div class="sidebar-item"><i data-lucide="download"></i> Загрузки</div>
                 </div>
-                <div class="file-grid">
+                <div class="file-grid" id="main-file-grid">
                     <div class="file-item">
                         <div class="file-icon"><i data-lucide="folder-closed"></i></div>
                         <div class="file-name">Проекты</div>
@@ -136,9 +136,59 @@
                         <div class="file-icon"><i data-lucide="folder-closed"></i></div>
                         <div class="file-name">Видео</div>
                     </div>
-                    <div class="file-item" data-type="image" data-src="https://cdn.discordapp.com/attachments/1476359560301383840/1494642933801025727/959c6cec73d6452297644bea73c83fdbtplv-jj85edgx6n-image-medium.gif?ex=6a181634&is=6a16c4b4&hm=0523c9c0316b875ad663da93ee91b7a0c9b5f334de44bb01613b85ce61e8f93e&">
+                    <div class="file-item folder-item" data-folder="anapa2008">
+                        <div class="file-icon"><i data-lucide="folder-closed"></i></div>
+                        <div class="file-name">Анапа 2008</div>
+                    </div>
+                    <div class="file-item" data-type="image" data-src="https://i.pinimg.com/736x/ae/5a/d5/ae5ad548b947962ef9a98923e406bacd.jpg">
                         <div class="file-icon"><i data-lucide="image"></i></div>
                         <div class="file-name">boykisser.png</div>
+                    </div>
+                </div>
+                <div class="file-grid" id="anapa2008-grid" style="display: none;">
+                    <div class="file-item back-button">
+                        <div class="file-icon"><i data-lucide="arrow-left"></i></div>
+                        <div class="file-name">Назад</div>
+                    </div>
+                    <div class="file-item" data-type="image" data-src="https://i.pinimg.com/736x/ce/42/fe/ce42feec851ec17b8cdd02bdee2af92a.jpg">
+                        <div class="file-icon"><i data-lucide="image"></i></div>
+                        <div class="file-name">IMG_001.jpg</div>
+                    </div>
+                    <div class="file-item" data-type="image" data-src="https://i.pinimg.com/1200x/48/d5/e1/48d5e1102daba21907ff94ed344d8c30.jpg">
+                        <div class="file-icon"><i data-lucide="image"></i></div>
+                        <div class="file-name">IMG_002.jpg</div>
+                    </div>
+                    <div class="file-item" data-type="image" data-src="https://i.pinimg.com/736x/ea/2c/60/ea2c6098d24a473b4507def11e37035b.jpg">
+                        <div class="file-icon"><i data-lucide="image"></i></div>
+                        <div class="file-name">IMG_003.jpg</div>
+                    </div>
+                    <div class="file-item" data-type="image" data-src="https://i.pinimg.com/736x/42/1a/72/421a72cc82850618f135a503563e1fcf.jpg">
+                        <div class="file-icon"><i data-lucide="image"></i></div>
+                        <div class="file-name">IMG_004.jpg</div>
+                    </div>
+                    <div class="file-item" data-type="image" data-src="https://i.pinimg.com/736x/0d/7e/20/0d7e20b32b611542a90811a96894ad63.jpg">
+                        <div class="file-icon"><i data-lucide="image"></i></div>
+                        <div class="file-name">IMG_005.jpg</div>
+                    </div>
+                    <div class="file-item" data-type="image" data-src="https://i.pinimg.com/736x/15/63/52/156352b6e4cddaa769bbc49cff3a9dfa.jpg">
+                        <div class="file-icon"><i data-lucide="image"></i></div>
+                        <div class="file-name">IMG_006.jpg</div>
+                    </div>
+                    <div class="file-item" data-type="image" data-src="https://i.pinimg.com/736x/7e/22/30/7e2230e1981e978468d5145e8545f6f8.jpg">
+                        <div class="file-icon"><i data-lucide="image"></i></div>
+                        <div class="file-name">IMG_007.jpg</div>
+                    </div>
+                    <div class="file-item" data-type="image" data-src="https://i.pinimg.com/736x/34/74/a1/3474a1ae5d2cd2530a2df8af557a6a22.jpg">
+                        <div class="file-icon"><i data-lucide="image"></i></div>
+                        <div class="file-name">IMG_008.jpg</div>
+                    </div>
+                    <div class="file-item" data-type="image" data-src="https://i.pinimg.com/736x/69/04/fd/6904fd294304472eebb291d5a15e7501.jpg">
+                        <div class="file-icon"><i data-lucide="image"></i></div>
+                        <div class="file-name">IMG_009.jpg</div>
+                    </div>
+                    <div class="file-item" data-type="image" data-src="https://i.pinimg.com/736x/eb/4a/e3/eb4ae3e39e9e4853117b3cf0edc6ed8f.jpg">
+                        <div class="file-icon"><i data-lucide="image"></i></div>
+                        <div class="file-name">IMG_010.jpg</div>
                     </div>
                 </div>
             </div>
@@ -449,17 +499,8 @@
                         <div class="gallery-item" data-img="https://i.pinimg.com/736x/05/17/28/05172802eff2c1a0830afc5ab5ec500b.jpg">
                             <img src="https://i.pinimg.com/736x/05/17/28/05172802eff2c1a0830afc5ab5ec500b.jpg" alt="Photo 2">
                         </div>
-                        <div class="gallery-item" data-img="https://i.pinimg.com/736x/c8/3e/3d/c83e3d8e8f8e8f8e8f8e8f8e8f8e8f8e.jpg">
-                            <img src="https://i.pinimg.com/originals/c8/3e/3d/c83e3d8e8f8e8f8e8f8e8f8e8f8e8f8e.jpg" alt="Photo 3">
-                        </div>
-                        <div class="gallery-item" data-img="https://i.pinimg.com/736x/a1/b2/c3/a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6.jpg">
-                            <img src="https://i.pinimg.com/originals/a1/b2/c3/a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6.jpg" alt="Photo 4">
-                        </div>
-                        <div class="gallery-item" data-img="https://i.pinimg.com/736x/9b/19/41/9b19419f6a1493977b66648677e88b6c.jpg">
-                            <img src="https://i.pinimg.com/736x/9b/19/41/9b19419f6a1493977b66648677e88b6c.jpg" alt="Photo 5">
-                        </div>
-                        <div class="gallery-item" data-img="https://i.pinimg.com/736x/05/17/28/05172802eff2c1a0830afc5ab5ec500b.jpg">
-                            <img src="https://i.pinimg.com/736x/05/17/28/05172802eff2c1a0830afc5ab5ec500b.jpg" alt="Photo 6">
+                        <div class="gallery-item" data-img="https://i.pinimg.com/736x/ae/5a/d5/ae5ad548b947962ef9a98923e406bacd.jpg">
+                            <img src="https://i.pinimg.com/736x/ae/5a/d5/ae5ad548b947962ef9a98923e406bacd.jpg" alt="Photo 3">
                         </div>
                     </div>
                 </div>

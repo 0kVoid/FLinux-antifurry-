@@ -81,20 +81,27 @@ document.querySelectorAll('.dock-item').forEach((item, index) => {
         item.classList.add('active');
 
         const windows = document.querySelectorAll('.window');
+        let targetWindow = null;
+
         if (index === 0) {
-            windows[1].style.display = 'block'; // Files
+            targetWindow = windows[1]; // Files
         } else if (index === 1) {
-            windows[0].style.display = 'block'; // Terminal
+            targetWindow = windows[0]; // Terminal
         } else if (index === 2) {
-            windows[2].style.display = 'block'; // Gmail
+            targetWindow = windows[2]; // Gmail
         } else if (index === 3) {
-            windows[3].style.display = 'block'; // Player
+            targetWindow = windows[3]; // Player
         } else if (index === 4) {
-            windows[6].style.display = 'block'; // Gallery
+            targetWindow = windows[6]; // Gallery
         } else if (index === 5) {
-            windows[4].style.display = 'block'; // Settings
+            targetWindow = windows[4]; // Settings
         } else if (index === 6) {
-            windows[5].style.display = 'block'; // Browser
+            targetWindow = windows[5]; // Browser
+        }
+
+        if (targetWindow) {
+            targetWindow.style.display = 'block';
+            targetWindow.style.zIndex = ++highestZIndex;
         }
     });
 });
@@ -260,9 +267,15 @@ document.querySelectorAll('.theme-card').forEach(card => {
         const themeName = card.querySelector('.theme-name').textContent;
 
         if (themeName === 'Dark Mode') {
-            document.body.style.background = 'linear-gradient(135deg, #1a1a1a 0%, #2d1b2e 100%)';
+            document.body.style.background = 'linear-gradient(135deg, #ffffff0a 0%, hwb(0 100% 0% / 0.062) 0%, hwb(0 100% 0% / 0.096) 0%), url("./images/black.png")';
+            document.body.style.backgroundSize = 'cover';
+            document.body.style.backgroundPosition = 'center';
+            document.body.style.backgroundAttachment = 'fixed';
         } else if (themeName === 'Light Mode') {
-            document.body.style.background = 'linear-gradient(135deg, #ffffff 0%, #f0f0f0 100%)';
+            document.body.style.background = 'linear-gradient(135deg, #ffffff0a 0%, hwb(0 100% 0% / 0.062) 0%, hwb(0 100% 0% / 0.096) 0%), url("./images/white.jpg")';
+            document.body.style.backgroundSize = 'cover';
+            document.body.style.backgroundPosition = 'center';
+            document.body.style.backgroundAttachment = 'fixed';
         } else {
             document.body.style.background = `linear-gradient(135deg, #ffffff0a 0%, hwb(0 100% 0% / 0.062) 0%, hwb(0 100% 0% / 0.096) 0%), url('https://4kwallpapers.com/images/walls/thumbs_3t/26436.jpg')`;
             document.body.style.backgroundSize = 'cover';
@@ -366,6 +379,14 @@ function loadBrowserPage(url) {
                     <a href="#" class="quick-link" data-url="https://example.com">
                         <i data-lucide="globe"></i>
                         <span>Example.com</span>
+                    </a>
+                    <a href="#" class="quick-link" data-url="https://pornone.com">
+                        <i data-lucide="heart"></i>
+                        <span>PornOne</span>
+                    </a>
+                    <a href="#" class="quick-link" data-url="http://porno365.plus">
+                        <i data-lucide="heart"></i>
+                        <span>Porno365</span>
                     </a>
                     <a href="#" class="quick-link" data-url="https://github.com" data-external="true">
                         <i data-lucide="code"></i>
@@ -623,32 +644,148 @@ document.querySelectorAll('.file-item').forEach(item => {
     item.addEventListener('dblclick', () => {
         const fileType = item.dataset.type;
         const fileSrc = item.dataset.src;
+        const folderName = item.dataset.folder;
 
         if (fileType === 'image' && fileSrc) {
             // Открываем просмотрщик изображений
             openImageViewer(fileSrc);
+        } else if (folderName) {
+            // Открываем папку
+            openFolder(folderName);
         }
     });
 });
 
+// Открытие папки
+function openFolder(folderName) {
+    const mainGrid = document.getElementById('main-file-grid');
+    const folderGrid = document.getElementById(folderName + '-grid');
+    const windowTitle = document.querySelector('#files .window-title');
+
+    if (mainGrid && folderGrid) {
+        mainGrid.style.display = 'none';
+        folderGrid.style.display = 'grid';
+        windowTitle.innerHTML = '<i data-lucide="folder-open"></i> Анапа 2008';
+        lucide.createIcons();
+    }
+}
+
+// Кнопка "Назад"
+document.addEventListener('dblclick', (e) => {
+    if (e.target.closest('.back-button')) {
+        const mainGrid = document.getElementById('main-file-grid');
+        const anapaGrid = document.getElementById('anapa2008-grid');
+        const windowTitle = document.querySelector('#files .window-title');
+
+        if (mainGrid && anapaGrid) {
+            anapaGrid.style.display = 'none';
+            mainGrid.style.display = 'grid';
+            windowTitle.innerHTML = '<i data-lucide="folder-closed"></i> Файлы';
+            lucide.createIcons();
+        }
+    }
+});
+
 // Просмотрщик изображений
+let currentFolderImages = [];
+let currentImageIndexInFolder = 0;
+
 function openImageViewer(imageSrc) {
     const lightbox = document.getElementById('lightbox');
     const lightboxImg = document.querySelector('.lightbox-img');
     const lightboxCounter = document.querySelector('.lightbox-counter');
+    const lightboxPrev = document.querySelector('.lightbox-prev');
+    const lightboxNext = document.querySelector('.lightbox-next');
 
     if (lightbox && lightboxImg) {
-        lightboxImg.src = imageSrc;
-        lightboxCounter.textContent = '1 / 1';
-        lightbox.classList.add('active');
+        // Проверяем, открыта ли папка Анапа 2008
+        const anapaGrid = document.getElementById('anapa2008-grid');
+        const isAnapaOpen = anapaGrid && anapaGrid.style.display !== 'none';
 
-        // Скрываем кнопки навигации для одиночного изображения
-        document.querySelector('.lightbox-prev').style.display = 'none';
-        document.querySelector('.lightbox-next').style.display = 'none';
+        if (isAnapaOpen) {
+            // Собираем все изображения из папки Анапа 2008
+            currentFolderImages = Array.from(anapaGrid.querySelectorAll('.file-item[data-type="image"]'))
+                .map(item => item.dataset.src);
+
+            // Находим индекс текущего изображения
+            currentImageIndexInFolder = currentFolderImages.indexOf(imageSrc);
+
+            lightboxImg.src = imageSrc;
+            lightboxCounter.textContent = `${currentImageIndexInFolder + 1} / ${currentFolderImages.length}`;
+            lightbox.classList.add('active');
+
+            // Показываем кнопки навигации
+            lightboxPrev.style.display = 'flex';
+            lightboxNext.style.display = 'flex';
+        } else {
+            // Одиночное изображение
+            lightboxImg.src = imageSrc;
+            lightboxCounter.textContent = '1 / 1';
+            lightbox.classList.add('active');
+
+            // Скрываем кнопки навигации для одиночного изображения
+            lightboxPrev.style.display = 'none';
+            lightboxNext.style.display = 'none';
+        }
 
         lucide.createIcons();
     }
 }
+
+// Навигация по изображениям в папке
+function nextFolderImage() {
+    if (currentFolderImages.length > 0) {
+        currentImageIndexInFolder = (currentImageIndexInFolder + 1) % currentFolderImages.length;
+        const lightboxImg = document.querySelector('.lightbox-img');
+        const lightboxCounter = document.querySelector('.lightbox-counter');
+        lightboxImg.src = currentFolderImages[currentImageIndexInFolder];
+        lightboxCounter.textContent = `${currentImageIndexInFolder + 1} / ${currentFolderImages.length}`;
+    }
+}
+
+function prevFolderImage() {
+    if (currentFolderImages.length > 0) {
+        currentImageIndexInFolder = (currentImageIndexInFolder - 1 + currentFolderImages.length) % currentFolderImages.length;
+        const lightboxImg = document.querySelector('.lightbox-img');
+        const lightboxCounter = document.querySelector('.lightbox-counter');
+        lightboxImg.src = currentFolderImages[currentImageIndexInFolder];
+        lightboxCounter.textContent = `${currentImageIndexInFolder + 1} / ${currentFolderImages.length}`;
+    }
+}
+
+// Обновляем обработчики кнопок lightbox
+const lightboxPrevBtn = document.querySelector('.lightbox-prev');
+const lightboxNextBtn = document.querySelector('.lightbox-next');
+
+if (lightboxPrevBtn) {
+    lightboxPrevBtn.addEventListener('click', prevFolderImage);
+}
+
+if (lightboxNextBtn) {
+    lightboxNextBtn.addEventListener('click', nextFolderImage);
+}
+
+// Обновляем навигацию клавиатурой
+document.addEventListener('keydown', (e) => {
+    const lightbox = document.getElementById('lightbox');
+    if (lightbox && lightbox.classList.contains('active')) {
+        if (e.key === 'ArrowRight') {
+            if (currentFolderImages.length > 0) {
+                nextFolderImage();
+            } else {
+                nextImage();
+            }
+        } else if (e.key === 'ArrowLeft') {
+            if (currentFolderImages.length > 0) {
+                prevFolderImage();
+            } else {
+                prevImage();
+            }
+        } else if (e.key === 'Escape') {
+            closeLightbox();
+        }
+    }
+});
 
 // Модифицируем функцию закрытия lightbox
 function closeLightbox() {
